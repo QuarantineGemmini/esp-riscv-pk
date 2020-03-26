@@ -27,6 +27,10 @@ static void mstatus_init()
   if (supports_extension('D') || supports_extension('F'))
     write_csr(mstatus, MSTATUS_FS);
 
+  // Enable XS
+  if (supports_extension('X'))
+    set_csr(mstatus, (MSTATUS_XS & (MSTATUS_XS >> 1)));
+
   // Enable user/supervisor use of perf counters
   if (supports_extension('S'))
     write_csr(scounteren, -1);
